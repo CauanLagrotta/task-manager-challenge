@@ -1,0 +1,15 @@
+services:
+  portgres:
+    image: postgres:latest
+    container_name: task-manager
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: task-manager-db
+    volumes:
+      - task-manager-db:/var/lib/postgresql
+
+volumes:
+  task-manager-db:
