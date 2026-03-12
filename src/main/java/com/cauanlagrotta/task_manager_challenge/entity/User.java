@@ -2,6 +2,7 @@ package com.cauanlagrotta.task_manager_challenge.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,10 @@ public class User {
   @Email
   @Column(name = "email", nullable = false, unique = true)
   private String email;
+
+  public User(String name, String email) {
+    this.name = name;
+    this.email = email;
+  }
+
 }
