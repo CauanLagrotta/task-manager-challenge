@@ -33,8 +33,8 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 ### 🗄️ Camada de Repositório
 
-- [ ] `UserRepository` (Spring Data JPA)
-    - [ ] Método para verificar e-mail duplicado (`existsByEmail`)
+- [x] `UserRepository` (Spring Data JPA)
+    - [x] Método para verificar e-mail duplicado (`existsByEmail`)
 - [ ] `TaskRepository` (Spring Data JPA)
     - [ ] Método para buscar tarefas por usuário (`findByUserId`)
 
@@ -42,8 +42,8 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 ### 📦 DTOs
 
-- [ ] `UserRequestDTO` (name, email)
-- [ ] `UserResponseDTO` (id, name, email)
+- [x] `UserRequestDTO` (name, email)
+- [x] `UserResponseDTO` (id, name, email)
 - [ ] `TaskRequestDTO` (title, description, status, userId)
 - [ ] `TaskResponseDTO` (id, title, description, status, userId)
 - [ ] `TaskStatusUpdateDTO` (status)
@@ -52,8 +52,8 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 ### ⚙️ Camada de Serviço
 
-- [ ] `UserService`
-    - [ ] `createUser` — valida e-mail único, salva usuário
+- [x] `UserService`
+    - [x] `createUser` — valida e-mail único, salva usuário
 - [ ] `TaskService`
     - [ ] `createTask` — valida existência do usuário, cria tarefa
     - [ ] `getTasksByUser` — retorna todas as tarefas de um usuário
@@ -64,8 +64,8 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 ### 🌐 Camada de Controller
 
-- [ ] `UserController`
-    - [ ] `POST /users` — criar usuário
+- [x] `UserController`
+    - [x] `POST /users` — criar usuário
     - [ ] `GET /users/{id}/tasks` — listar tarefas do usuário
 - [ ] `TaskController`
     - [ ] `POST /tasks` — criar tarefa
@@ -84,18 +84,18 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 ### ❌ Tratamento de Erros
 
-- [ ] Classe `GlobalExceptionHandler` com `@ControllerAdvice`
+- [x] Classe `GlobalExceptionHandler` com `@ControllerAdvice`
     - [ ] `EntityNotFoundException` (usuário ou tarefa não encontrado → 404)
-    - [ ] `EmailAlreadyExistsException` (e-mail duplicado → 409)
+    - [x] `EmailAlreadyExistsException` (e-mail duplicado → 409)
     - [ ] `InvalidStatusTransitionException` (transição inválida de status → 422)
-    - [ ] `MethodArgumentNotValidException` (erros de validação → 400)
+    - [x] `MethodArgumentNotValidException` (erros de validação → 400)
 
 ---
 
 ### ⭐ Diferenciais
 
 - [ ] Paginação no endpoint `GET /tasks?page=0&size=10`
-- [ ] Documentação completa via Swagger (springdoc-openapi)
+- [x] Documentação completa via Swagger (springdoc-openapi)
 - [ ] Uso de `@Transactional` nos métodos de escrita
 
 ---

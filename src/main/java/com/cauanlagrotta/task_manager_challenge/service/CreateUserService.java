@@ -15,7 +15,7 @@ public class CreateUserService {
 
   public UserResponseDTO execute(UserRequestDTO dto) {
     if (userRepository.existsByEmail(dto.email())) {
-      throw new UserAlreadyExistsException("User email is already stored.");
+      throw new UserAlreadyExistsException();
     }
     User savedUser = userRepository.save(dto.toUser());
     return new UserResponseDTO(savedUser.getId(), savedUser.getName(), savedUser.getEmail());
