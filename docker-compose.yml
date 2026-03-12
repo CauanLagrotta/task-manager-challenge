@@ -1,5 +1,5 @@
 services:
-  portgres:
+  postgres:
     image: postgres:latest
     container_name: task-manager
     ports:

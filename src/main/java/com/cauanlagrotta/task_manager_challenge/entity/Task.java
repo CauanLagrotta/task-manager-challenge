@@ -27,4 +27,8 @@ public class Task {
 
   @Column(name = "status")
   private Status status = Status.PENDING;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User userId;
 }
