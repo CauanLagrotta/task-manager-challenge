@@ -76,8 +76,8 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 ### 🛡️ Validações
 
-- [ ] Anotações `@Valid`, `@NotBlank`, `@NotNull`, `@Email` nos DTOs
-- [ ] Validação de e-mail único no serviço
+- [x] Anotações `@Valid`, `@NotBlank`, `@NotNull`, `@Email` nos DTOs
+- [x] Validação de e-mail único no serviço
 - [ ] Validação de transição de status (`DONE` → qualquer outro é bloqueado)
 
 ---
@@ -85,9 +85,9 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 ### ❌ Tratamento de Erros
 
 - [x] Classe `GlobalExceptionHandler` com `@ControllerAdvice`
-    - [ ] `EntityNotFoundException` (usuário ou tarefa não encontrado → 404)
+    - [x] `EntityNotFoundException` (usuário ou tarefa não encontrado → 404)
     - [x] `EmailAlreadyExistsException` (e-mail duplicado → 409)
-    - [ ] `InvalidStatusTransitionException` (transição inválida de status → 422)
+    - [x] `InvalidStatusTransitionException` (transição inválida de status → 422)
     - [x] `MethodArgumentNotValidException` (erros de validação → 400)
 
 ---

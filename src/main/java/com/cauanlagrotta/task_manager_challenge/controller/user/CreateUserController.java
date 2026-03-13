@@ -1,8 +1,8 @@
-package com.cauanlagrotta.task_manager_challenge.controller;
+package com.cauanlagrotta.task_manager_challenge.controller.user;
 
 import com.cauanlagrotta.task_manager_challenge.dto.UserRequestDTO;
 import com.cauanlagrotta.task_manager_challenge.dto.UserResponseDTO;
-import com.cauanlagrotta.task_manager_challenge.service.CreateUserService;
+import com.cauanlagrotta.task_manager_challenge.service.user.CreateUserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
