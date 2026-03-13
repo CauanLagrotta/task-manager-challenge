@@ -35,8 +35,8 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 - [x] `UserRepository` (Spring Data JPA)
     - [x] Método para verificar e-mail duplicado (`existsByEmail`)
-- [ ] `TaskRepository` (Spring Data JPA)
-    - [ ] Método para buscar tarefas por usuário (`findByUserId`)
+- [x] `TaskRepository` (Spring Data JPA)
+    - [x] Método para verificar se usuário existe (`existsByUserId`)
 
 ---
 
@@ -44,18 +44,18 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 - [x] `UserRequestDTO` (name, email)
 - [x] `UserResponseDTO` (id, name, email)
-- [ ] `TaskRequestDTO` (title, description, status, userId)
-- [ ] `TaskResponseDTO` (id, title, description, status, userId)
+- [x] `TaskRequestDTO` (title, description, status, userId)
+- [x] `TaskResponseDTO` (id, title, description, status, userId)
 - [ ] `TaskStatusUpdateDTO` (status)
 
 ---
 
 ### ⚙️ Camada de Serviço
 
-- [x] `UserService`
+- [x] `CreateUserService` (anteriormente `UserService`)
     - [x] `createUser` — valida e-mail único, salva usuário
-- [ ] `TaskService`
-    - [ ] `createTask` — valida existência do usuário, cria tarefa
+- [ ] `CreateTaskService` (anteriormente `TaskService`)
+    - [x] `createTask` — valida existência do usuário, cria tarefa
     - [ ] `getTasksByUser` — retorna todas as tarefas de um usuário
     - [ ] `updateTaskStatus` — atualiza status, bloqueia transição a partir de `DONE`
     - [ ] `deleteTask` — remove tarefa por ID
@@ -64,11 +64,11 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 ### 🌐 Camada de Controller
 
-- [x] `UserController`
-    - [x] `POST /users` — criar usuário
+- [x] `CreateUserController` (anteriormente `UserController`)
+    - [x] `POST /api/user` — criar usuário
     - [ ] `GET /users/{id}/tasks` — listar tarefas do usuário
-- [ ] `TaskController`
-    - [ ] `POST /tasks` — criar tarefa
+- [ ] `CreateTaskController` (anteriormente `TaskController`)
+    - [x] `POST /api/task` — criar tarefa
     - [ ] `PATCH /tasks/{id}/status` — atualizar status da tarefa
     - [ ] `DELETE /tasks/{id}` — deletar tarefa
 
@@ -84,10 +84,10 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 ### ❌ Tratamento de Erros
 
-- [x] Classe `GlobalExceptionHandler` com `@ControllerAdvice`
-    - [x] `EntityNotFoundException` (usuário ou tarefa não encontrado → 404)
-    - [x] `EmailAlreadyExistsException` (e-mail duplicado → 409)
-    - [x] `InvalidStatusTransitionException` (transição inválida de status → 422)
+- [x] Classe `RestExceptionHandler` com `@RestControllerAdvice`
+    - [x] `UserNotFoundException` (usuário não encontrado → 404)
+    - [x] `UserAlreadyExistsException` (e-mail duplicado → 409)
+    - [x] `InvalidStatusException` (status inválido → 400)
     - [x] `MethodArgumentNotValidException` (erros de validação → 400)
 
 ---
@@ -116,30 +116,34 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 ├── config/
 │   └── SpringDocAPIConfiguration.java
 ├── controller/
-│   ├── UserController.java
-│   └── TaskController.java
+│   ├── task/
+│   │   └── CreateTaskController.java
+│   └── user/
+│       └── CreateUserController.java
 ├── dto/
-│   ├── UserRequestDTO.java
-│   ├── UserResponseDTO.java
 │   ├── TaskRequestDTO.java
 │   ├── TaskResponseDTO.java
-│   └── TaskStatusUpdateDTO.java
+│   ├── UserRequestDTO.java
+│   └── UserResponseDTO.java
 ├── entity/
 │   ├── enums/
 │   │   └── Status.java
-│   ├── User.java
-│   └── Task.java
-├── exception/
-│   ├── GlobalExceptionHandler.java
-│   ├── EmailAlreadyExistsException.java
-│   ├── EntityNotFoundException.java
-│   └── InvalidStatusTransitionException.java
+│   ├── Task.java
+│   └── User.java
+├── exceptions/
+│   ├── InvalidStatusException.java
+│   ├── RestExceptionHandler.java
+│   ├── TaskManagerException.java
+│   ├── UserAlreadyExistsException.java
+│   └── UserNotFoundException.java
 ├── repository/
-│   ├── UserRepository.java
-│   └── TaskRepository.java
+│   ├── TaskRepository.java
+│   └── UserRepository.java
 ├── service/
-│   ├── UserService.java
-│   └── TaskService.java
+│   ├── task/
+│   │   └── CreateTaskService.java
+│   └── user/
+│       └── CreateUserService.java
 └── TaskManagerChallengeApplication.java
 ```
 
@@ -149,12 +153,12 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
-| `POST` | `/users` | Criar usuário |
-| `GET` | `/users/{id}/tasks` | Listar tarefas do usuário |
-| `POST` | `/tasks` | Criar tarefa |
-| `PATCH` | `/tasks/{id}/status` | Atualizar status da tarefa |
-| `DELETE` | `/tasks/{id}` | Deletar tarefa |
-| `GET` | `/tasks?page=0&size=10` | Listar tarefas com paginação |
+| `POST` | `/api/user` | Criar usuário |
+| `GET` | `/users/{id}/tasks` | Listar tarefas do usuário (não implementado) |
+| `POST` | `/api/task` | Criar tarefa |
+| `PATCH` | `/tasks/{id}/status` | Atualizar status da tarefa (não implementado) |
+| `DELETE` | `/tasks/{id}` | Deletar tarefa (não implementado) |
+| `GET` | `/tasks?page=0&size=10` | Listar tarefas com paginação (não implementado) |
 | `GET` | `/api-docs.html` | Swagger UI |
 
 ---
