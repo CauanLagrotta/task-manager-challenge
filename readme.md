@@ -56,9 +56,10 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
     - [x] `createUser` — valida e-mail único, salva usuário
 - [ ] `CreateTaskService` (anteriormente `TaskService`)
     - [x] `createTask` — valida existência do usuário, cria tarefa
-    - [ ] `getTasksByUser` — retorna todas as tarefas de um usuário
     - [ ] `updateTaskStatus` — atualiza status, bloqueia transição a partir de `DONE`
     - [ ] `deleteTask` — remove tarefa por ID
+- [x] `GetTasksByUserIdService`
+    - [x] `getTasksByUser` — retorna todas as tarefas de um usuário (com paginação)
 
 ---
 
@@ -66,7 +67,8 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 - [x] `CreateUserController` (anteriormente `UserController`)
     - [x] `POST /api/user` — criar usuário
-    - [ ] `GET /users/{id}/tasks` — listar tarefas do usuário
+- [x] `GetTasksByUserIdController`
+    - [x] `GET /users/{id}/tasks` — listar tarefas do usuário (com paginação)
 - [ ] `CreateTaskController` (anteriormente `TaskController`)
     - [x] `POST /api/task` — criar tarefa
     - [ ] `PATCH /tasks/{id}/status` — atualizar status da tarefa
@@ -94,7 +96,7 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 ### ⭐ Diferenciais
 
-- [ ] Paginação no endpoint `GET /tasks?page=0&size=10`
+- [x] Paginação nos endpoints de listagem (ex: `GET /users/{id}/tasks?page=0&pageSize=10`)
 - [x] Documentação completa via Swagger (springdoc-openapi)
 - [ ] Uso de `@Transactional` nos métodos de escrita
 
@@ -117,10 +119,13 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 │   └── SpringDocAPIConfiguration.java
 ├── controller/
 │   ├── task/
-│   │   └── CreateTaskController.java
+│   │   ├── CreateTaskController.java
+│   │   └── GetTasksByUserIdController.java
 │   └── user/
 │       └── CreateUserController.java
 ├── dto/
+│   ├── ApiResponse.java
+│   ├── PaginationResponse.java
 │   ├── TaskRequestDTO.java
 │   ├── TaskResponseDTO.java
 │   ├── UserRequestDTO.java
@@ -141,7 +146,8 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 │   └── UserRepository.java
 ├── service/
 │   ├── task/
-│   │   └── CreateTaskService.java
+│   │   ├── CreateTaskService.java
+│   │   └── GetTasksByUserIdService.java
 │   └── user/
 │       └── CreateUserService.java
 └── TaskManagerChallengeApplication.java
@@ -154,11 +160,10 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 | Método | Endpoint | Descrição |
 |--------|----------|-----------|
 | `POST` | `/api/user` | Criar usuário |
-| `GET` | `/users/{id}/tasks` | Listar tarefas do usuário (não implementado) |
+| `GET` | `/users/{id}/tasks` | Listar tarefas do usuário (com paginação) |
 | `POST` | `/api/task` | Criar tarefa |
 | `PATCH` | `/tasks/{id}/status` | Atualizar status da tarefa (não implementado) |
 | `DELETE` | `/tasks/{id}` | Deletar tarefa (não implementado) |
-| `GET` | `/tasks?page=0&size=10` | Listar tarefas com paginação (não implementado) |
 | `GET` | `/api-docs.html` | Swagger UI |
 
 ---
