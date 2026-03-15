@@ -46,7 +46,7 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 - [x] `UserResponseDTO` (id, name, email)
 - [x] `TaskRequestDTO` (title, description, status, userId)
 - [x] `TaskResponseDTO` (id, title, description, status, userId)
-- [ ] `TaskStatusUpdateDTO` (status)
+- [x] `TaskStatusUpdateDTO` (status)
 
 ---
 
@@ -54,9 +54,9 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 - [x] `CreateUserService` (anteriormente `UserService`)
     - [x] `createUser` — valida e-mail único, salva usuário
-- [ ] `CreateTaskService` (anteriormente `TaskService`)
+- [x] `CreateTaskService` (anteriormente `TaskService`)
     - [x] `createTask` — valida existência do usuário, cria tarefa
-    - [ ] `updateTaskStatus` — atualiza status, bloqueia transição a partir de `DONE`
+    - [x] `updateTaskStatus` — atualiza status, bloqueia transição a partir de `DONE`
     - [ ] `deleteTask` — remove tarefa por ID
 - [x] `GetTasksByUserIdService`
     - [x] `getTasksByUser` — retorna todas as tarefas de um usuário (com paginação)
@@ -69,9 +69,9 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
     - [x] `POST /api/user` — criar usuário
 - [x] `GetTasksByUserIdController`
     - [x] `GET /users/{id}/tasks` — listar tarefas do usuário (com paginação)
-- [ ] `CreateTaskController` (anteriormente `TaskController`)
+- [x] `CreateTaskController` (anteriormente `TaskController`)
     - [x] `POST /api/task` — criar tarefa
-    - [ ] `PATCH /tasks/{id}/status` — atualizar status da tarefa
+    - [x] `PATCH /api/tasks/{id}/status` — atualizar status da tarefa
     - [ ] `DELETE /tasks/{id}` — deletar tarefa
 
 ---
@@ -80,7 +80,7 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 
 - [x] Anotações `@Valid`, `@NotBlank`, `@NotNull`, `@Email` nos DTOs
 - [x] Validação de e-mail único no serviço
-- [ ] Validação de transição de status (`DONE` → qualquer outro é bloqueado)
+- [x] Validação de transição de status (`DONE` → qualquer outro é bloqueado)
 
 ---
 
@@ -91,6 +91,8 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
     - [x] `UserAlreadyExistsException` (e-mail duplicado → 409)
     - [x] `InvalidStatusException` (status inválido → 400)
     - [x] `MethodArgumentNotValidException` (erros de validação → 400)
+    - [x] `TaskNotFoundException` (tarefa não encontrada → 404)
+    - [x] `StatusCannotChangeFromDone` (não pode mudar status de DONE → 400)
 
 ---
 
@@ -120,12 +122,14 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 ├── controller/
 │   ├── task/
 │   │   ├── CreateTaskController.java
-│   │   └── GetTasksByUserIdController.java
+│   │   ├── GetTasksByUserIdController.java
+│   │   └── UpdateStatusByIdController.java
 │   └── user/
 │       └── CreateUserController.java
 ├── dto/
 │   ├── ApiResponse.java
 │   ├── PaginationResponse.java
+│   ├── StatusUpdateDTO.java
 │   ├── TaskRequestDTO.java
 │   ├── TaskResponseDTO.java
 │   ├── UserRequestDTO.java
@@ -138,7 +142,9 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 ├── exceptions/
 │   ├── InvalidStatusException.java
 │   ├── RestExceptionHandler.java
+│   ├── StatusCannotChangeFromDone.java
 │   ├── TaskManagerException.java
+│   ├── TaskNotFoundException.java
 │   ├── UserAlreadyExistsException.java
 │   └── UserNotFoundException.java
 ├── repository/
@@ -147,7 +153,8 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 ├── service/
 │   ├── task/
 │   │   ├── CreateTaskService.java
-│   │   └── GetTasksByUserIdService.java
+│   │   ├── GetTasksByUserIdService.java
+│   │   └── UpdateStatusByIdService.java
 │   └── user/
 │       └── CreateUserService.java
 └── TaskManagerChallengeApplication.java
@@ -162,7 +169,7 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 | `POST` | `/api/user` | Criar usuário |
 | `GET` | `/users/{id}/tasks` | Listar tarefas do usuário (com paginação) |
 | `POST` | `/api/task` | Criar tarefa |
-| `PATCH` | `/tasks/{id}/status` | Atualizar status da tarefa (não implementado) |
+| `PATCH` | `/api/tasks/{id}/status` | Atualizar status da tarefa |
 | `DELETE` | `/tasks/{id}` | Deletar tarefa (não implementado) |
 | `GET` | `/api-docs.html` | Swagger UI |
 
