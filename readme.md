@@ -57,7 +57,7 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 - [x] `CreateTaskService` (anteriormente `TaskService`)
     - [x] `createTask` — valida existência do usuário, cria tarefa
     - [x] `updateTaskStatus` — atualiza status, bloqueia transição a partir de `DONE`
-    - [ ] `deleteTask` — remove tarefa por ID
+    - [x] `deleteTask` — remove tarefa por ID
 - [x] `GetTasksByUserIdService`
     - [x] `getTasksByUser` — retorna todas as tarefas de um usuário (com paginação)
 
@@ -72,7 +72,7 @@ API REST de gerenciamento de tarefas construída com Spring Boot, desenvolvida c
 - [x] `CreateTaskController` (anteriormente `TaskController`)
     - [x] `POST /api/task` — criar tarefa
     - [x] `PATCH /api/tasks/{id}/status` — atualizar status da tarefa
-    - [ ] `DELETE /tasks/{id}` — deletar tarefa
+    - [x] `DELETE /tasks/{id}` — deletar tarefa
 
 ---
 
@@ -122,6 +122,7 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 ├── controller/
 │   ├── task/
 │   │   ├── CreateTaskController.java
+│   │   ├── DeleteTaskByIdController.java
 │   │   ├── GetTasksByUserIdController.java
 │   │   └── UpdateStatusByIdController.java
 │   └── user/
@@ -153,6 +154,7 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 ├── service/
 │   ├── task/
 │   │   ├── CreateTaskService.java
+│   │   ├── DeleteTasksByIdService.java
 │   │   ├── GetTasksByUserIdService.java
 │   │   └── UpdateStatusByIdService.java
 │   └── user/
@@ -170,7 +172,7 @@ src/main/java/com/cauanlagrotta/task_manager_challenge/
 | `GET` | `/users/{id}/tasks` | Listar tarefas do usuário (com paginação) |
 | `POST` | `/api/task` | Criar tarefa |
 | `PATCH` | `/api/tasks/{id}/status` | Atualizar status da tarefa |
-| `DELETE` | `/tasks/{id}` | Deletar tarefa (não implementado) |
+| `DELETE` | `/api/tasks/{id}` | Deletar tarefa |
 | `GET` | `/api-docs.html` | Swagger UI |
 
 ---
