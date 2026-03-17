@@ -20,10 +20,6 @@ public class GetTasksByUserIdService {
   public Page<TaskResponseDTO> findAllByUserId(UUID userId, PageRequest pageRequest){
     var tasks = taskRepository.findAllByUserId(userId, pageRequest);
 
-//    if(!userId.equals(tasks.getContent().getFirst().getUserId())){
-//      throw new UserNotFoundException();
-//    }
-
     return tasks.map(TaskResponseDTO::fromEntity);
   }
 }
